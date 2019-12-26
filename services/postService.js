@@ -1,11 +1,11 @@
 const Post = require('../models/Post')
 
 const getPosts = async () => {
-    return await Post.find()
+    return Post.find()
 }
 
 const getPostById = async(postId) => {
-    return await Post.findById(postId)
+    return Post.findById(postId)
 }
 
 const createPost = async (content) => {
@@ -13,8 +13,8 @@ const createPost = async (content) => {
         title: content.title,
         description: content.description,
     })
-    const savedPost = await post.save()
-    return savedPost
+    
+    return post.save()
 }
 
 module.exports = {
