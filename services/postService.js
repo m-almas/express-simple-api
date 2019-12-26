@@ -4,6 +4,10 @@ const getPosts = async () => {
     return await Post.find()
 }
 
+const getPostById = async(postId) => {
+    return await Post.findById(postId)
+}
+
 const createPost = async (content) => {
     const post = new Post({
         title: content.title,
@@ -15,5 +19,6 @@ const createPost = async (content) => {
 
 module.exports = {
     createPost, 
-    getPosts
+    getPosts,
+    getPostById
 }
