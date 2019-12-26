@@ -5,7 +5,7 @@ const {postController} = controller
 
 router.get('/', postController.getPosts);
 
-// router.get('/:id', postController.getPostById);
+router.get('/:id', postController.getPostById);
 
 router.post('/create', postController.postBlog);
 

@@ -11,6 +11,16 @@ const getPosts = async (req, res, next) => {
     }
 }
 
+const getPostById = async (req, res, next) => {
+    try {
+        const postId = req.params.id
+        const post = await postService.getPostById(postId)
+        res.json(post)
+    } catch (error) {
+        UnexpectedErr(res, error)
+    }
+}
+
 const postBlog = async (req, res, next) => {
     const {title, description} = req.body
     try {
