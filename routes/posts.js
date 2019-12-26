@@ -1,17 +1,15 @@
-const express = require('express');
-const router = express.Router();
-const Post = require('../models/Post');
-const verify = require('./verifyToken');
-const {UnexpectedErr} = require('../errors/index');
-//Routes
-router.use(verify)  
+const express = require('express')
+const router = express.Router()
+const controller = require('../controllers/index')
+const {postController} = controller
+const {UnexpectedErr} = require('../errors/index')
+
 router.get('/', async (req, res) => {
     try {
         const posts = await Post.find();
         res.json(
             {
                 posts: posts,
-                user: req.user
             });
     } catch (error) {
         UnexpectedErr(res)
@@ -29,18 +27,6 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/create', async (req, res) => {
-    const post = new Post({
-        title: req.body.title,
-        description: req.body.description,
-    })
-    try {
-        const savedData = await post.save();
-        res.json(savedData);
-    } catch (error) {
-        res.json({ message: error });
-    }
-
-});
+router.post('/create', postController.postBlog);
 
 module.exports = router;
