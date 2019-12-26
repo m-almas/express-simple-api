@@ -34,6 +34,7 @@ const postBlog = async (req, res, next) => {
 } 
 
 module.exports = {
+    getPosts,
+    getPostById,
     postBlog,
-    getPosts
 }
