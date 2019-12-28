@@ -32,38 +32,43 @@ describe('Posts', () => {
         }
         )
     })
-    describe('/POST posts', () => {
-        it('it should post with valid payload', (done) => {
-            let post = {
-                'payload': {
+    describe('/POST posts', async () => {
+        let testCases = [
+            {
+                'name':'valid',
+                'payload':{
                     'title': 'hello world',
-                    'description': 'some desc'
+                    'description':'some text', 
                 },
-                'expectedStatus': 201
-            }
-            chai.request(app)
-                .post("/posts/create")
-                .send(post.payload)
-                .end((err, res) => {
-                    res.should.have.status(post.expectedStatus)
-                })
-            done()
-        })
-        it('it try to post with invalid payload (missing title)', (done) => {
-            let post = {
-                'payload': {
-                    'description': 'some desc'
+                'expectedStatus':201
+            },
+            {
+                'name':'invalid (missing title)',
+                'payload':{
+                    'description':'some text', 
+                },
+                'expectedStatus': 400
+            },
+            {
+                'name':'invalid (missing description)',
+                'payload':{
+                    'title':'here is some title' 
                 },
                 'expectedStatus': 400
             }
-            chai.request(app)
+        ]
+
+        for (test in testCases){
+             it(`it should post with ${testCases[test].name} payload`, (done)=>{
+                chai.request(app)
                 .post("/posts/create")
-                .send(post.payload)
+                .send(testCases[test].payload)
                 .end((err, res) => {
-                    res.should.have.status(post.expectedStatus)
+                    res.should.have.status(testCases[test].expectedStatus)
                 })
-            done()
-        })
+                done()
+            })
+        }
     })
 })
 
