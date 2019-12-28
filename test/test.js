@@ -11,8 +11,8 @@ const should = chai.should()
 chai.use(chaiHttp)
 
 describe('Posts', () => {
-    beforeEach((done)=>{
-        Post.deleteMany({}, (err)=>{
+    beforeEach((done) => {
+        Post.deleteMany({}, (err) => {
             done()
         })
     })
@@ -31,6 +31,39 @@ describe('Posts', () => {
                 })
         }
         )
+    })
+    describe('/POST posts', () => {
+        it('it should post with valid payload', (done) => {
+            let post = {
+                'payload': {
+                    'title': 'hello world',
+                    'description': 'some desc'
+                },
+                'expectedStatus': 201
+            }
+            chai.request(app)
+                .post("/posts/create")
+                .send(post.payload)
+                .end((err, res) => {
+                    res.should.have.status(post.expectedStatus)
+                })
+            done()
+        })
+        it('it try to post with invalid payload (missing title)', (done) => {
+            let post = {
+                'payload': {
+                    'description': 'some desc'
+                },
+                'expectedStatus': 400
+            }
+            chai.request(app)
+                .post("/posts/create")
+                .send(post.payload)
+                .end((err, res) => {
+                    res.should.have.status(post.expectedStatus)
+                })
+            done()
+        })
     })
 })
 
