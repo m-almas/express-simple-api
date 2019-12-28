@@ -1,6 +1,6 @@
 const {postService} = require('../services/index') // accessing service 
 const {UnexpectedErr} = require('../errors/index')
-
+const {validatePost} = require('./validation/createPostValid')
 const getPosts = async (req, res, next) => {
     try {
         const posts = await postService.getPosts() 
@@ -22,14 +22,16 @@ const getPostById = async (req, res, next) => {
 }
 
 const postBlog = async (req, res, next) => {
-    const {title, description} = req.body
+    //here we should validate our data
+    
     try {
+        await validatePost(req)
+        const {title, description} = req.body
         saved = await postService.createPost({title, description})
         res.status(201).json(saved)
         next()
     } catch (error) {
-        console.log(error);
-        
+        res.status(400).json(error)
     }
 } 
 
