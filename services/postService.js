@@ -17,8 +17,16 @@ const createPost = async (content) => {
     return post.save()
 }
 
+const getExamplePost = () => {
+    return {
+        'title':'Example title', 
+        'description':'some text to describe',
+    }
+}
+
 module.exports = {
     createPost, 
     getPosts,
-    getPostById
+    getPostById, 
+    getExamplePost, 
 }
