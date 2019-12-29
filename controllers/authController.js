@@ -1,4 +1,4 @@
-const { registerValidation } = require('./validation/authValidation')
+const { registerValidation, loginValidation } = require('./validation/authValidation')
 const { userService } = require('../services/index')
 const { InternalServerErr, ValidationFailedErr } = require('../errors/index')
 
@@ -22,6 +22,26 @@ const registerUser = async (req, res, next) => {
 
 }
 
+const loginUser = async (req, res, next) => {
+    const user = req.body
+    try {
+        await loginValidation(user)
+    } catch (error) {
+        //TODO: elaborate
+        console.log('at validation');
+    }
+
+    try {
+        const accessToken = await userService.loginUser(user)
+        res.json({ accessToken })
+        next()
+    } catch (error) {
+        //TODO: elaborate 
+        console.log('error at login user', error)
+    }
+}
+
 module.exports = {
-    registerUser
+    registerUser,
+    loginUser
 }
