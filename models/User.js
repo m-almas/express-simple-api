@@ -23,9 +23,14 @@ const UserSchema = mongoose.Schema({
 );
 
 async function encryptPassword(password) {
-    const salt = await bcrypt.genSalt(10);
-    return bcrypt.hash(password, salt);
+    const salt = await bcrypt.genSalt(10)
+    return bcrypt.hash(password, salt)
 }
 
-module.exports.User = mongoose.model('Users', UserSchema);
-module.exports.encryptPassword = encryptPassword 
+function sanitize(user) {
+    return { _id: user._id, email: user.email, userName: user.userName }
+}
+
+module.exports.User = mongoose.model('Users', UserSchema)
+module.exports.encryptPassword = encryptPassword
+module.exports.sanitize = sanitize

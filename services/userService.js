@@ -1,4 +1,4 @@
-const {User, encryptPassword} = require('../models/User')
+const {User, encryptPassword, sanitize} = require('../models/User')
 
 
 const getUserById = async (userId) => {
@@ -13,7 +13,8 @@ const createUser = async (user) => {
             userName : user.userName, 
             encryptedPassword : encryptedPassword
         }) 
-        return saveUser.save()    
+        const savedUser = await saveUser.save()
+        return sanitize(savedUser)     
     } catch (error) {
         console.log('error at createUser', error);
     }
