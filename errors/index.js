@@ -20,10 +20,15 @@ const internalServerErr = function (res, err) {
     res.status(500).json({'message':'internal server error'})
 }
 
+const validationFailedErr = function (res, err) {
+    res.status(400).json({error:err})
+}
+
 module.exports = {
     InvalidToken: invalidToken,
     AccessDenied: accessDenied,
     UnexpectedErr: unexpectedErr, 
     CannotFindUserErr: cannotFindUserErr,
-    InternalServerErr: internalServerErr
+    InternalServerErr: internalServerErr, 
+    ValidationFailedErr: validationFailedErr,
 }
