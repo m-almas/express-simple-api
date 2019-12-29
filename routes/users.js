@@ -5,3 +5,5 @@ const {userController} = controller
 
 
 router.get('/:userId', userController.getUserById)
+
+module.exports = router
