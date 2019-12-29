@@ -8,12 +8,17 @@ const accessDenied = function (res) {
     res.status(401).json('Access denied')
 }
 
-const unexpectedErr = function (res) {
-    res.status(500).json('Internal server error')
+const unexpectedErr = function (res, err) {
+    res.status(500).json({ 'message': 'Internal server error', 'error': err })
+}
+
+const cannotFindUserErr = function (res, err) {
+    res.status(400).json({'message':'can not find the user'})
 }
 
 module.exports = {
     InvalidToken: invalidToken,
     AccessDenied: accessDenied,
-    UnexpectedErr: unexpectedErr
+    UnexpectedErr: unexpectedErr, 
+    CannotFindUserErr: cannotFindUserErr,
 }

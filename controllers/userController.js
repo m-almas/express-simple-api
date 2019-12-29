@@ -1,5 +1,5 @@
 const {userService} = require('../services/index')
-const {UnexpectedErr} = require('../errors/index')
+const {CannotFindUserErr} = require('../errors/index')
 
 const getUserById = async (req, res, next) => {
     try {
@@ -7,7 +7,7 @@ const getUserById = async (req, res, next) => {
         res.json({user: user})
         next()
     } catch (error) {
-        UnexpectedErr(res, error)
+        CannotFindUserErr(res, error)
     }
 }
 
