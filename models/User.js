@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+const bcrypt = require('bcryptjs')
 const UserSchema = mongoose.Schema({
     email: {
         type: String,
@@ -22,5 +22,10 @@ const UserSchema = mongoose.Schema({
     }
 );
 
+async function encryptPassword(password) {
+    const salt = await bcrypt.genSalt(10);
+    return bcrypt.hash(password, salt);
+}
 
-module.exports = mongoose.model('Users', UserSchema);
+module.exports.User = mongoose.model('Users', UserSchema);
+module.exports.encryptPassword = encryptPassword 
