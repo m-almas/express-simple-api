@@ -5,12 +5,12 @@ require('dotenv/config');
 
 //Import routes
 const postsRoute = require('./routes/posts');
-const authRoute = require('./routes/auth');
+const userRoute = require('./routes/users');
 
 //Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use('/user', authRoute);
+app.use('/user', userRoute);
 app.use('/posts', postsRoute);
 
 
