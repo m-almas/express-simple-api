@@ -17,7 +17,7 @@ const cannotFindUserErr = function (res, err) {
 }
 
 const internalServerErr = function (res, err) {
-    res.status(500).json({'message':'internal server error'})
+    res.status(500).json({'message':'internal server error', err})
 }
 
 const validationFailedErr = function (res, err) {
