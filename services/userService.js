@@ -1,4 +1,4 @@
-const User = require('../models/User')
+const {User, encryptPassword} = require('../models/User')
 
 
 const getUserById = async (userId) => {
@@ -6,8 +6,18 @@ const getUserById = async (userId) => {
 }
 
 const createUser = async (user) => {
-    const saveUser = new User(user)
-    return saveUser.save()
+    try {
+        const encryptedPassword = await encryptPassword(user.password)
+        const saveUser = new User({
+            email : user.email, 
+            userName : user.userName, 
+            encryptedPassword : encryptedPassword
+        }) 
+        return saveUser.save()    
+    } catch (error) {
+        console.log('error at createUser', error);
+    }
+    
 }
 
 module.exports = {
