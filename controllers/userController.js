@@ -10,3 +10,7 @@ const getUserById = async (req, res, next) => {
         UnexpectedErr(res, error)
     }
 }
+
+module.exports = {
+    getUserById, 
+}
