@@ -34,8 +34,16 @@ const loginUser = async (user) => {
     return accessToken
 }
 
+const getSampleAccessToken = () => {
+    const accessToken = jwt.sign({
+        _id: "exampleId"
+    }, process.env.TOKEN_SECRET)
+    return accessToken
+}
+
 module.exports = {
     getUserById,
     createUser,
-    loginUser
+    loginUser, 
+    getSampleAccessToken, 
 }
