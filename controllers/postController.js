@@ -15,7 +15,7 @@ const getPostById = async (req, res, next) => {
     try {
         const postId = req.params.id
         const post = await postService.getPostById(postId)
-        res.json(post)
+        res.json({post, user:req.user})
     } catch (error) {
         UnexpectedErr(res, error)
     }

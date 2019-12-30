@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const {InvalidToken, AccessDenied} = require('../errors/index')
 
-module.exports = function(req,res,next) {
+module.exports = async function(req,res,next) {
     let token = req.header('Authorization')
     
     if (!token) return AccessDenied(res)
