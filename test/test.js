@@ -3,6 +3,7 @@ process.env.NODE_ENV = "test"
 let mongoose = require('mongoose')
 let Post = require('../models/Post')
 const {getExamplePost} = require('../services/postService')
+const {getSampleAccessToken} = require('../services/authService')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const { app } = require('../app')
@@ -89,6 +90,27 @@ describe('Posts', () => {
                 done()
             })
         }
+    })
+    describe('/GET into secured route', () => {
+        it('should try to access secured route without token', (done) => {
+            chai.request(app)
+            .get("/posts/asdadas")
+            .send({})
+            .end((err,res)=>{
+                res.should.have.status(401)
+            })
+            done()
+        })
+        it('should try to access secured route with token', (done) => {
+            chai.request(app)
+            .get("/posts/asdadas")
+            .set('Authorization', 'Bearer ' + getSampleAccessToken())
+            .send({})
+            .end((err,res)=>{
+                res.should.have.status(500)
+            })
+            done()
+        })
     })
 })
 
