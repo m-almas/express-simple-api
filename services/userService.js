@@ -1,6 +1,6 @@
 const { User, encryptPassword, sanitize } = require('../models/User')
 const bcrypt = require('bcryptjs')
-
+const jwt = require('jsonwebtoken')
 const getUserById = async (userId) => {
     return User.findById(userId)
 }
@@ -28,7 +28,9 @@ const loginUser = async (user) => {
     if (!fetchedUser) { throw { message: 'Incorrect email or password' }}
     const isCorrect = bcrypt.compareSync(user.password, fetchedUser.encryptedPassword);
     if (!isCorrect) { throw { message: 'Incorrect email or password' }}
-    const accessToken = "this will be access token"
+    const accessToken = jwt.sign({
+                    _id: fetchedUser._id
+                }, process.env.TOKEN_SECRET)
     return accessToken
 }
 

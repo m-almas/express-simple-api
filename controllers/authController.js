@@ -33,7 +33,7 @@ const loginUser = async (req, res, next) => {
 
     try {
         const accessToken = await userService.loginUser(user)
-        res.json({ accessToken })
+        res.header('Authorization', accessToken).json({message:'successfully registered'})
         next()
     } catch (error) {
         //TODO: elaborate 
